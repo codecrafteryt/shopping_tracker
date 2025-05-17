@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:shopping_tracker/utils/extensions/extentions.dart';
 import 'package:shopping_tracker/utils/values/my_color.dart';
 import 'package:shopping_tracker/utils/values/style.dart';
+import 'package:shopping_tracker/views/home/top_deal_screen.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -15,21 +19,23 @@ class Home extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            20.sbh,
+            60.sbh,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Home\nDashboard',
+                  'Home\nDash board',
                   style: kSize14DarkW400Text.copyWith(
                     fontSize: 36,
                     fontWeight: FontWeight.w700,
-                    color: const Color.fromRGBO(20, 174, 92, 0.99),
+                    color: const Color.fromRGBO(20, 174, 92, 1),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: 16.0),
-                  child: Icon(Icons.search, color: Color(0xFF14AE5C)),
+                  child: Icon(Icons.search,
+                      color: Color.fromRGBO(73, 69, 79, 1),
+                  ),
                 ),
               ],
             ),
@@ -37,19 +43,23 @@ class Home extends StatelessWidget {
             22.sbh,
             Container(
               decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10),
+                  color: Color.fromRGBO(236, 230, 240, 1),
+                borderRadius: BorderRadius.circular(30.r),
               ),
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.menu, color: Colors.grey),
+                  prefixIcon: Icon(Icons.menu, color: Colors.grey, size: 24.r,),
+                  suffixIcon: Icon(Icons.search, color: Colors.grey, size: 24.r,),
                   hintText: 'Hinted search text',
+                  hintStyle: TextStyle(
+                      color: Color.fromRGBO(73, 69, 79, 1)
+                  ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(vertical: 12),
                 ),
               ),
             ),
-          22.sbh,
+            22.sbh,
             // Grid Buttons
             GridView.count(
               shrinkWrap: true,
@@ -60,36 +70,42 @@ class Home extends StatelessWidget {
               childAspectRatio: 2.7,
               children: [
                 _DashboardButton(
-                  imagePath: 'assets/images/top_deals.png',
-                  label: 'Top Deals',
-                ),
+                    imagePath: 'assets/images/top_deals.png',
+                    label: 'Top Deals',
+                    onPressed: (){
+                      debugPrint('Top Deals');
+                      Get.to(() => const DealsScreen());
+                    },
+                  ),
                 _DashboardButton(
                   imagePath: 'assets/images/budget.png',
                   label: 'Budget Tracker',
+                  onPressed: (){},
                 ),
                 _DashboardButton(
                   imagePath: 'assets/images/price.png',
-                  label: 'Price Comparison',
+                  label: 'Price\nxComparison',
+                  onPressed: (){},
                 ),
                 _DashboardButton(
                   imagePath: 'assets/images/cart.png',
-                  label: 'Shopping',
+                  label: 'Sustainable \n Shopping mode',
+                  onPressed: (){},
                 ),
               ],
             ),
            34.sbh,
-            // Recently Viewed Section
-            const Text(
+            Text( // Recently Viewed Section
               'Recently Viewed',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: kSize15DarkW500Text.copyWith(
+                fontWeight: FontWeight.w700,
+                color: Color.fromRGBO(2, 84, 45, 1),
+              )
             ),
-           25.sbh,
-            // Product List
-            SizedBox(
-              height: 150,
+           35.sbh,
+
+            SizedBox( // Product List
+              height: 250,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -117,8 +133,11 @@ class Home extends StatelessWidget {
 class _DashboardButton extends StatelessWidget {
   final String imagePath;
   final String label;
+  final VoidCallback onPressed;
+
 
   const _DashboardButton({
+    required this.onPressed,
     required this.imagePath,
     required this.label,
   });
@@ -126,27 +145,31 @@ class _DashboardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF14AE5C),
+        backgroundColor: Color.fromRGBO(0, 153, 81, 0.88),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 14),
+        padding: EdgeInsets.symmetric(vertical: 14.h),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          8.sbw,
           Image.asset(
             imagePath,
             fit: BoxFit.fill,
-            width: 24,
-            height: 24,
+            width: 32.w,
+            height: 32.h,
           ),
-          const SizedBox(width: 8),
+          8.sbw,
           Text(
             label,
-            style: const TextStyle(color: Colors.white),
+            style: kSize13DarkW300Text.copyWith(
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
@@ -169,7 +192,7 @@ class _ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
+      width: 120.w,
       margin: const EdgeInsets.only(right: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +201,7 @@ class _ProductCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
               imageUrl,
-              height: 100,
+              height: 110.h,
               width: double.infinity,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
@@ -188,16 +211,21 @@ class _ProductCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 5),
+         5.sbh,
           Text(
             title,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            maxLines: 1,
+            style: kSize13DarkW300Text.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
+          5.sbh,
           Text(
             price,
-            style: const TextStyle(fontSize: 13, color: Colors.grey),
+            style: kSize13DarkW300Text.copyWith(
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ],
       ),
